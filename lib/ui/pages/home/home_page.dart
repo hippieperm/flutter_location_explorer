@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_location_explorer/ui/pages/home/widget/list_item.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -31,43 +32,10 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView.separated(
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(
-                      255,
-                      234,
-                      230,
-                      230,
-                    ).withAlpha(110),
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '오늘의 날씨',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text('오늘의 날씨', style: TextStyle(fontSize: 14)),
-                            Text('오늘의 날씨', style: TextStyle(fontSize: 14)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              return ListItem(
+                title: '삼성1동 주민센터',
+                category: '공공, 사회기관>행복복지센터',
+                roadAddress: '서울특별시 강남구 봉은사로 616 삼성1동 주민센터',
               );
             },
             separatorBuilder: (context, index) {
