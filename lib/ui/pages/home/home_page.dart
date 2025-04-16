@@ -51,6 +51,7 @@ class HomePage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(20),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               '오늘의 날씨',
