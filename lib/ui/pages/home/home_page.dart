@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_location_explorer/ui/pages/home/widget/list_item.dart';
+import 'widget/list_item.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
