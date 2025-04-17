@@ -18,11 +18,11 @@ class HomePage extends StatelessWidget {
               hintText: '위치입력',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: const BorderSide(color: Colors.grey),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: const BorderSide(color: Colors.grey),
               ),
             ),
           ),
@@ -32,14 +32,14 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView.separated(
             itemBuilder: (context, index) {
-              return ListItem(
+              return const ListItem(
                 title: '삼성1동 주민센터',
                 category: '공공, 사회기관>행복복지센터',
                 roadAddress: '서울특별시 강남구 봉은사로 616 삼성1동 주민센터',
               );
             },
             separatorBuilder: (context, index) {
-              return SizedBox(height: 5);
+              return const SizedBox(height: 5);
             },
             itemCount: 10,
           ),

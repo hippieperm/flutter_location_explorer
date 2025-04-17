@@ -27,16 +27,19 @@ class ListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Text(category, style: TextStyle(fontSize: 14)),
-                  Text(roadAddress, style: TextStyle(fontSize: 14)),
+                  Text(category, style: const TextStyle(fontSize: 14)),
+                  Text(roadAddress, style: const TextStyle(fontSize: 14)),
                 ],
               ),
             ),
