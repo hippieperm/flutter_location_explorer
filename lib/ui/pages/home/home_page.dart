@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(backgroundColor: Colors.blue[700]),
       body: SafeArea(
         bottom: false,
-        child: Stack(children: [_buildBackground(), _buildContent()]),
+        child: Stack(children: [_buildBackground(), _buildContent(context)]),
       ),
     );
   }
@@ -27,7 +27,7 @@ Widget _buildBackground() {
   );
 }
 
-Center _buildContent() {
+Center _buildContent(BuildContext context) {
   return Center(
     child: SingleChildScrollView(
       child: Padding(
@@ -39,6 +39,7 @@ Center _buildContent() {
             const SizedBox(height: 48),
             _buildTitle(),
             _buildDescription(),
+            _buildSearchButton(context),
           ],
         ),
       ),
@@ -90,6 +91,24 @@ Widget _buildDescription() {
       shadows: [
         Shadow(color: Colors.black26, offset: Offset(0, 1), blurRadius: 2),
       ],
+    ),
+  );
+}
+
+Widget _buildSearchButton(BuildContext context) {
+  return SizedBox(
+    width: double.infinity,
+    child: ElevatedButton.icon(
+      onPressed: () {},
+      icon: const Icon(Icons.search),
+      label: const Text('장소 검색하기'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.blue[700],
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      ),
     ),
   );
 }
