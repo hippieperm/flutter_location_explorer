@@ -7,7 +7,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.blue[700]),
-      body: SafeArea(child: Stack(children: [_buildBackground()])),
+      body: SafeArea(
+        bottom: false,
+        child: Stack(children: [_buildBackground()]),
+      ),
     );
   }
 }
