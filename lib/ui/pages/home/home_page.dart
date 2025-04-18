@@ -34,7 +34,7 @@ Center _buildContent() {
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [_buildLogo(), _buildTitle()],
+          children: [_buildLogo(), const SizedBox(height: 48), _buildTitle()],
         ),
       ),
     ),
