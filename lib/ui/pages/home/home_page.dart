@@ -34,7 +34,12 @@ Center _buildContent() {
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [_buildLogo(), const SizedBox(height: 48), _buildTitle()],
+          children: [
+            _buildLogo(),
+            const SizedBox(height: 48),
+            _buildTitle(),
+            _buildDescription(),
+          ],
         ),
       ),
     ),
@@ -69,6 +74,21 @@ Text _buildTitle() {
       color: Colors.white,
       shadows: [
         Shadow(color: Colors.black26, offset: Offset(0, 2), blurRadius: 4),
+      ],
+    ),
+  );
+}
+
+Widget _buildDescription() {
+  return const Text(
+    '네이버 지역 검색 API를 이용하여\n주변의 장소를 검색해보세요!',
+    textAlign: TextAlign.center,
+    style: TextStyle(
+      color: Colors.white,
+      fontSize: 16,
+      height: 1.5,
+      shadows: [
+        Shadow(color: Colors.black26, offset: Offset(0, 1), blurRadius: 2),
       ],
     ),
   );
