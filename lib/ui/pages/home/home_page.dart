@@ -34,7 +34,7 @@ Center _buildContent() {
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [_buildLogo()],
+          children: [_buildLogo(), _buildTitle()],
         ),
       ),
     ),
@@ -57,5 +57,19 @@ Container _buildLogo() {
       ],
     ),
     child: Icon(Icons.place, size: 80, color: Colors.blue[700]),
+  );
+}
+
+Text _buildTitle() {
+  return Text(
+    '위치 검색',
+    style: TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      shadows: [
+        Shadow(color: Colors.black26, offset: Offset(0, 2), blurRadius: 4),
+      ],
+    ),
   );
 }
