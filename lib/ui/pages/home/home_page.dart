@@ -101,6 +101,7 @@ class HomePage extends StatelessWidget {
   Widget _buildSearchButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: 55,
       child: ElevatedButton.icon(
         onPressed: () {},
         icon: const Icon(Icons.search),
@@ -121,6 +122,7 @@ class HomePage extends StatelessWidget {
   Widget _buildLocationButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: 55,
       child: TextButton.icon(
         onPressed: () {},
         icon: const Icon(Icons.location_on),
