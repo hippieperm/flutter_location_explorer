@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(backgroundColor: Colors.blue[700]),
       body: SafeArea(
         bottom: false,
-        child: Stack(children: [_buildBackground()]),
+        child: Stack(children: [_buildBackground(), _buildContent()]),
       ),
     );
   }
@@ -25,4 +25,8 @@ Widget _buildBackground() {
       ),
     ),
   );
+}
+
+Center _buildContent() {
+  return Center(child: Text('Hello'));
 }
