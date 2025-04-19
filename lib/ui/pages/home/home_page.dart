@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_location_explorer/ui/pages/search/search_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -103,7 +104,12 @@ class HomePage extends StatelessWidget {
       width: double.infinity,
       height: 55,
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SearchPage()),
+          );
+        },
         icon: const Icon(Icons.search),
         label: const Text('장소 검색하기'),
         style: ElevatedButton.styleFrom(
