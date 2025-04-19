@@ -19,6 +19,7 @@ class SearchPage extends StatelessWidget {
       body: Column(
         children: [
           Container(
+            height: 50,
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -31,7 +32,25 @@ class SearchPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: Row(),
+            child: Row(
+              children: [
+                Icon(Icons.search, color: Colors.grey[600]),
+                SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: TextEditingController(),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: '검색어를 입력하세요',
+                      hintStyle: TextStyle(color: Colors.grey[400]),
+                    ),
+                    onSubmitted: (value) {
+                      if (value.isNotEmpty) {}
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
