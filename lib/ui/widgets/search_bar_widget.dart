@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SearchBarWidget extends StatelessWidget {
+class SearchBarWidget extends StatefulWidget {
   final Function(String) onSearch;
   final String? initialValue;
   final String hintText;
@@ -13,6 +13,19 @@ class SearchBarWidget extends StatelessWidget {
     this.hintText = '검색어를 입력하세요',
     this.prefixIcon = Icons.search,
   });
+
+  @override
+  State<SearchBarWidget> createState() => _SearchBarWidgetState();
+}
+
+class _SearchBarWidgetState extends State<SearchBarWidget> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+  }
 
   @override
   Widget build(BuildContext context) {
