@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatelessWidget {
-  const SearchBarWidget({super.key});
+  final Function(String) onSearch;
+  final String? initialValue;
+  final String hintText;
+  final IconData prefixIcon;
+
+  const SearchBarWidget({
+    super.key,
+    required this.onSearch,
+    this.initialValue,
+    this.hintText = '검색어를 입력하세요',
+    this.prefixIcon = Icons.search,
+  });
 
   @override
   Widget build(BuildContext context) {
