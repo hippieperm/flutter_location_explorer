@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_location_explorer/ui/widgets/search_bar_widget.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -16,43 +17,9 @@ class SearchPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 50,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withAlpha(26),
-                  blurRadius: 8,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.search, color: Colors.grey[600]),
-                SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    controller: TextEditingController(),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: '검색어를 입력하세요',
-                      hintStyle: TextStyle(color: Colors.grey[400]),
-                    ),
-                    onSubmitted: (value) {
-                      if (value.isNotEmpty) {}
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(children: [SearchBarWidget()]),
       ),
     );
   }
