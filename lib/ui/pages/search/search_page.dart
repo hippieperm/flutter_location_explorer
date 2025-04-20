@@ -55,12 +55,22 @@ class _SearchPageState extends State<SearchPage> {
           children: [
             SearchBarWidget(
               onSearch: (query) {
-                print(query);
+                _performSearch(query);
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _performSearch(String query) {
+    final provider = Provider.of<PlaceProvider>(context, listen: false);
+
+    if (provider.currentPosition != null) {
+      provider.searchPlacesByLocation(query);
+    } else {
+      provider.searchPlacesByKeyword(query);
+    }
   }
 }
