@@ -38,4 +38,32 @@ class Place {
   }
 }
 
+class PlaceResponse {
+  final int total;
+  final int start;
+  final int display;
+  final List<Place> items;
 
+  PlaceResponse({
+    required this.total,
+    required this.start,
+    required this.display,
+    required this.items,
+  });
+
+  factory PlaceResponse.fromJson(Map<String, dynamic> json) {
+    List<Place> items = [];
+    if (json['items'] != null) {
+      items = List<Place>.from(
+        json['items'].map((item) => Place.fromJson(item)),
+      );
+    }
+
+    return PlaceResponse(
+      total: json['total'] ?? 0,
+      start: json['start'] ?? 0,
+      display: json['display'] ?? 0,
+      items: items,
+    );
+  }
+}
