@@ -47,6 +47,7 @@ class PlaceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 현재 위치 가져오기
   Future<void> getCurrentLocation() async {
     _loadingState = SearchLoadingState.loading;
     notifyListeners();
@@ -62,6 +63,7 @@ class PlaceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 키워드 검색
   Future<void> searchPlacesByKeyword(String query) async {
     _loadingState = SearchLoadingState.loading;
     _searchQuery = query;
@@ -72,6 +74,42 @@ class PlaceProvider extends ChangeNotifier {
     try {
       final response = await _repository.searchPlacesByKeyword(
         query: query,
+        display: _itemsPerPage,
+        start: 1,
+      );
+
+      _updateSearchResults(response);
+    } catch (e) {
+      _loadingState = SearchLoadingState.error;
+      _errorMessage = '검색 중 오류가 발생했습니다.';
+    }
+
+    notifyListeners();
+  }
+
+  // 위치 기반 장소 검색
+  Future<void> searchPlacesByLocation(String query) async {
+    if (_currentPosition == null) {
+      await getCurrentLocation();
+      if (_currentPosition == null) {
+        _loadingState = SearchLoadingState.error;
+        _errorMessage = '위치 정보가 필요합니다.';
+        notifyListeners();
+        return;
+      }
+    }
+
+    _loadingState = SearchLoadingState.loading;
+    _searchQuery = query;
+    _currentPage = 1;
+    _places = [];
+    notifyListeners();
+
+    try {
+      final response = await _repository.searchPlacesByLocation(
+        query: query,
+        latitude: _currentPosition!.latitude,
+        longitude: _currentPosition!.longitude,
         display: _itemsPerPage,
         start: 1,
       );
