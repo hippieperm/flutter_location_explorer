@@ -56,7 +56,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 hintStyle: TextStyle(color: Colors.grey[400]),
               ),
               onSubmitted: (value) {
-                if (value.isNotEmpty) {}
+                if (value.isNotEmpty) {
+                  widget.onSearch(value);
+                }
               },
             ),
           ),
