@@ -69,7 +69,7 @@ class _SearchPageState extends State<SearchPage> {
     return Consumer<PlaceProvider>(
       builder: (context, provider, child) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
           child: Row(
             children: [
               Expanded(
@@ -112,13 +112,20 @@ class _SearchPageState extends State<SearchPage> {
     required bool selected,
     required VoidCallback onPressed,
   }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: selected ? Colors.blue : Colors.grey[200],
-        foregroundColor: selected ? Colors.white : Colors.black,
+    return SizedBox(
+      height: 55,
+
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: selected ? Colors.blue : Colors.grey[200],
+          foregroundColor: selected ? Colors.white : Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+        ),
+        child: Text(label),
       ),
-      child: Text(label),
     );
   }
 
