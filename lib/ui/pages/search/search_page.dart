@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_location_explorer/data/provider/place_provider.dart';
 import 'package:flutter_location_explorer/ui/widgets/search_bar_widget.dart';
+import 'package:provider/provider.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -9,8 +11,30 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  
-  final TextEditingController _scrollController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      final provider = Provider.of<PlaceProvider>(context, listen: false);
+      if (provider.loadingState != SearchLoadingState.loading &&
+          provider.hasMoreItems) {
+        provider.loadMorePlaces();
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
