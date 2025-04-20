@@ -22,4 +22,18 @@ class PlaceRepository {
       sort: sort,
     );
   }
+
+  Future<PlaceResponse> searchPlacesByKeyword({
+    required String query,
+    int display = 10,
+    int start = 1,
+    String sort = 'random',
+  }) async {
+    return await _naverApiClient.searchPlaces(
+      query: query,
+      display: display,
+      start: start,
+      sort: sort,
+    );
+  }
 }
