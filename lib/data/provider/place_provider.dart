@@ -122,4 +122,52 @@ class PlaceProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  // 추가 데이터 로드 (페이지네이션)
+  Future<void> loadMorePlaces() async {
+    if (!_hasMoreItems || _loadingState == SearchLoadingState.loading) {
+      return;
+    }
+
+    _loadingState = SearchLoadingState.loading;
+    notifyListeners();
+
+    final nextPage = _currentPage + 1;
+    final start = (nextPage - 1) * _itemsPerPage + 1;
+
+    try {
+      PlaceResponse response;
+
+      if (_currentPosition != null) {
+        response = await _repository.searchPlacesByLocation(
+          query: _searchQuery,
+          latitude: _currentPosition!.latitude,
+          longitude: _currentPosition!.longitude,
+          display: _itemsPerPage,
+          start: start,
+        );
+      } else {
+        response = await _repository.searchPlacesByKeyword(
+          query: _searchQuery,
+          display: _itemsPerPage,
+          start: start,
+        );
+      }
+
+      if (response.items.isNotEmpty) {
+        _places.addAll(response.items);
+        _currentPage = nextPage;
+        _hasMoreItems = _places.length < response.total;
+      } else {
+        _hasMoreItems = false;
+      }
+
+      _loadingState = SearchLoadingState.loaded;
+    } catch (e) {
+      _loadingState = SearchLoadingState.error;
+      _errorMessage = '추가 데이터를 로드하는 중 오류가 발생했습니다.';
+    }
+
+    notifyListeners();
+  }
 }
