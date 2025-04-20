@@ -58,9 +58,52 @@ class _SearchPageState extends State<SearchPage> {
                 _performSearch(query);
               },
             ),
+            _buildSearchTypeToggle(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSearchTypeToggle() {
+    return Consumer<PlaceProvider>(
+      builder: (context, provider, child) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: _buildToggleButton(
+                  label: '키워드 검색',
+                  selected: provider.currentPosition == null,
+                  onPressed: () {
+                    if (provider.searchQuery.isNotEmpty) {
+                      provider.searchPlacesByKeyword(provider.searchQuery);
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: _buildToggleButton(
+                  label: '내 주변 검색',
+                  selected: provider.currentPosition != null,
+                  onPressed: () async {
+                    if (provider.currentPosition == null) {
+                      await provider.getCurrentLocation();
+                    }
+
+                    if (provider.searchQuery.isNotEmpty &&
+                        provider.currentPosition != null) {
+                      provider.searchPlacesByLocation(provider.searchQuery);
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
