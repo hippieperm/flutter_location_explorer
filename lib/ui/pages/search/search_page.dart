@@ -64,6 +64,21 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  Widget _buildToggleButton({
+    required String label,
+    required bool selected,
+    required VoidCallback onPressed,
+  }) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: selected ? Colors.blue : Colors.grey[200],
+        foregroundColor: selected ? Colors.white : Colors.black,
+      ),
+      child: Text(label),
+    );
+  }
+
   void _performSearch(String query) {
     final provider = Provider.of<PlaceProvider>(context, listen: false);
 
