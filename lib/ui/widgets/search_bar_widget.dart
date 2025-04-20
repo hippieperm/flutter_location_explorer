@@ -49,7 +49,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           SizedBox(width: 8),
           Expanded(
             child: TextField(
-              controller: TextEditingController(),
+              controller: _controller,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: '검색어를 입력하세요',
@@ -62,7 +62,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           ),
           IconButton(
             icon: const Icon(Icons.clear, color: Colors.grey),
-            onPressed: () {},
+            onPressed: () {
+              _controller.clear();
+            },
           ),
           IconButton(icon: const Icon(Icons.search), onPressed: () {}),
         ],
