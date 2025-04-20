@@ -9,6 +9,9 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  
+  final TextEditingController _scrollController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
