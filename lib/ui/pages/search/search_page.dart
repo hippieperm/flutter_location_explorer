@@ -45,7 +45,12 @@ class _SearchPageState extends State<SearchPage> {
         title: Text('장소 검색'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<PlaceProvider>(
+                context,
+                listen: false,
+              ).getCurrentLocation();
+            },
             icon: Icon(Icons.location_on),
             tooltip: '현재 위치 가져오기',
           ),
@@ -61,6 +66,7 @@ class _SearchPageState extends State<SearchPage> {
               },
             ),
             _buildSearchTypeToggle(),
+            Expanded(child: _buildSearchResults()),
           ],
         ),
       ),
