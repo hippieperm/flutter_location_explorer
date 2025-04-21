@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../data/provider/place_provider.dart';
 import '../search/search_page.dart';
+import '../../widgets/loading_overlay.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -133,13 +134,8 @@ class HomePage extends StatelessWidget {
       height: 55,
       child: TextButton.icon(
         onPressed: () async {
-          // 로딩 표시
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('위치 정보를 가져오는 중...'),
-              duration: Duration(seconds: 1),
-            ),
-          );
+          // 애니메이션 로딩 다이얼로그 표시
+          AnimatedLoadingDialog.show(context, '위치 정보를 가져오는 중...');
 
           final provider = Provider.of<PlaceProvider>(context, listen: false);
 
@@ -148,29 +144,33 @@ class HomePage extends StatelessWidget {
 
           if (!context.mounted) return;
 
+          // 로딩 다이얼로그 닫기
+          AnimatedLoadingDialog.hide(context);
+
           if (provider.currentPosition != null) {
             // 위치 정보를 성공적으로 가져온 경우
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('위치 정보를 성공적으로 가져왔습니다.'),
-                duration: Duration(seconds: 1),
-              ),
-            );
-
-            // 검색 페이지로 이동하고 위치 기반 검색 모드 설정
-            provider.setSearchMode(true);
-
-            Navigator.push(
+            SuccessDialog.show(
               context,
-              MaterialPageRoute(builder: (context) => const SearchPage()),
+              '위치 정보를 성공적으로 가져왔습니다!',
+              onDismissed: () {
+                // 다이얼로그가 닫힌 후 검색 페이지로 이동
+                if (context.mounted) {
+                  // 위치 기반 검색 모드 설정
+                  provider.setSearchMode(true);
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SearchPage()),
+                  );
+                }
+              },
             );
           } else {
-            // 위치 정보를 가져오지 못한 경우
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('위치 정보를 가져오는데 실패했습니다. 위치 권한을 확인해주세요.'),
-                duration: Duration(seconds: 3),
-              ),
+            // 위치 정보를 가져오지 못한 경우 - 에러 다이얼로그 사용
+            ErrorDialog.show(
+              context,
+              title: '위치 정보 오류',
+              message: provider.errorMessage,
             );
           }
         },
