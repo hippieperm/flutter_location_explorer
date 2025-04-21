@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../data/model/place.dart';
 import '../../util/url_util.dart';
+import '../widgets/info_dialog.dart';
 
 class PlaceCardWidget extends StatelessWidget {
   final Place place;
@@ -126,12 +127,13 @@ class PlaceCardWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildActionButton(
-            context,
-            Icons.public,
-            '상세정보',
-            () => UrlUtil.openUrl(place.link),
-          ),
+          _buildActionButton(context, Icons.public, '상세정보', () {
+            if (place.link.isEmpty) {
+              _showNoDetailsDialog(context);
+            } else {
+              UrlUtil.openUrl(place.link);
+            }
+          }),
           _buildActionButton(
             context,
             Icons.map,
@@ -241,7 +243,14 @@ class PlaceCardWidget extends StatelessWidget {
                         context,
                         '웹페이지 방문하기',
                         Icons.public,
-                        () => UrlUtil.openUrl(place.link),
+                        () {
+                          if (place.link.isEmpty) {
+                            Navigator.pop(context);
+                            _showNoDetailsDialog(context);
+                          } else {
+                            UrlUtil.openUrl(place.link);
+                          }
+                        },
                       ),
                       const SizedBox(height: 12),
                       _buildFullWidthButton(
@@ -337,6 +346,42 @@ class PlaceCardWidget extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 12),
         minimumSize: const Size(double.infinity, 0),
+      ),
+    );
+  }
+
+  void _showNoDetailsDialog(BuildContext context) {
+    InfoDialog.show(
+      context,
+      title: '상세 정보 없음',
+      message: '${place.cleanTitle}의 상세 정보가 제공되지 않습니다.\n다른 방법으로 정보를 확인해보세요.',
+      icon: Icons.info_outline,
+      iconColor: Colors.orangeAccent,
+      customAction: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 55,
+            child: ElevatedButton.icon(
+              onPressed: () => UrlUtil.openMapWithPlace(place),
+              icon: const Icon(Icons.map),
+              label: const Text('지도에서 보기'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                elevation: 2,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
