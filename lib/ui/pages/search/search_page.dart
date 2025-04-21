@@ -4,6 +4,7 @@ import '../../widgets/loading_widget.dart';
 import '../../widgets/place_card_widget.dart';
 import '../../widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/loading_overlay.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -46,13 +47,8 @@ class _SearchPageState extends State<SearchPage> {
         actions: [
           IconButton(
             onPressed: () async {
-              // 로딩 표시
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('위치 정보를 가져오는 중...'),
-                  duration: Duration(seconds: 1),
-                ),
-              );
+              // 애니메이션 로딩 다이얼로그 표시
+              AnimatedLoadingDialog.show(context, '위치 정보를 가져오는 중...');
 
               final provider = Provider.of<PlaceProvider>(
                 context,
@@ -62,29 +58,32 @@ class _SearchPageState extends State<SearchPage> {
 
               if (!context.mounted) return;
 
+              // 로딩 다이얼로그 닫기
+              AnimatedLoadingDialog.hide(context);
+
               if (provider.currentPosition != null) {
                 // 위치 정보 가져오기 성공
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('위치 정보를 성공적으로 가져왔습니다'),
-                    duration: Duration(seconds: 1),
-                  ),
+                SuccessDialog.show(
+                  context,
+                  '위치 정보를 성공적으로 가져왔습니다!',
+                  onDismissed: () {
+                    if (context.mounted) {
+                      // 위치 기반 검색 모드로 설정
+                      provider.setSearchMode(true);
+
+                      // 검색어가 있으면 위치 기반 검색 실행
+                      if (provider.searchQuery.isNotEmpty) {
+                        provider.searchPlacesByLocation(provider.searchQuery);
+                      }
+                    }
+                  },
                 );
-
-                // 위치 기반 검색 모드로 설정
-                provider.setSearchMode(true);
-
-                // 검색어가 있으면 위치 기반 검색 실행
-                if (provider.searchQuery.isNotEmpty) {
-                  provider.searchPlacesByLocation(provider.searchQuery);
-                }
               } else {
-                // 위치 정보 가져오기 실패
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(provider.errorMessage),
-                    duration: Duration(seconds: 3),
-                  ),
+                // 위치 정보 가져오기 실패 - 에러 다이얼로그 사용
+                ErrorDialog.show(
+                  context,
+                  title: '위치 정보 오류',
+                  message: provider.errorMessage,
                 );
               }
             },
