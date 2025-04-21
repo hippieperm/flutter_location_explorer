@@ -45,11 +45,48 @@ class _SearchPageState extends State<SearchPage> {
         title: Text('장소 검색'),
         actions: [
           IconButton(
-            onPressed: () {
-              Provider.of<PlaceProvider>(
+            onPressed: () async {
+              // 로딩 표시
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('위치 정보를 가져오는 중...'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+
+              final provider = Provider.of<PlaceProvider>(
                 context,
                 listen: false,
-              ).getCurrentLocation();
+              );
+              await provider.getCurrentLocation();
+
+              if (!context.mounted) return;
+
+              if (provider.currentPosition != null) {
+                // 위치 정보 가져오기 성공
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('위치 정보를 성공적으로 가져왔습니다'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+
+                // 위치 기반 검색 모드로 설정
+                provider.setSearchMode(true);
+
+                // 검색어가 있으면 위치 기반 검색 실행
+                if (provider.searchQuery.isNotEmpty) {
+                  provider.searchPlacesByLocation(provider.searchQuery);
+                }
+              } else {
+                // 위치 정보 가져오기 실패
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(provider.errorMessage),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+              }
             },
             icon: Icon(Icons.location_on),
             tooltip: '현재 위치 가져오기',
