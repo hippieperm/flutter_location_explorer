@@ -19,6 +19,7 @@ class PlaceProvider extends ChangeNotifier {
   int _currentPage = 1;
   int _itemsPerPage = 10;
   bool _hasMoreItems = true;
+  bool _isLocationSearch = false;
 
   SearchLoadingState get loadingState => _loadingState;
   String get errorMessage => _errorMessage;
@@ -28,6 +29,7 @@ class PlaceProvider extends ChangeNotifier {
   int get totalItems => _totalItems;
   int get currentPage => _currentPage;
   bool get hasMoreItems => _hasMoreItems;
+  bool get isLocationSearch => _isLocationSearch;
 
   // 검색 결과 업데이트
   void _updateSearchResults(PlaceResponse response) {
@@ -168,6 +170,12 @@ class PlaceProvider extends ChangeNotifier {
       _errorMessage = '추가 데이터를 로드하는 중 오류가 발생했습니다.';
     }
 
+    notifyListeners();
+  }
+
+  // 검색 모드 설정 메서드 추가
+  void setSearchMode(bool isLocation) {
+    _isLocationSearch = isLocation;
     notifyListeners();
   }
 }
