@@ -68,7 +68,14 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               _controller.clear();
             },
           ),
-          IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              if (_controller.text.isNotEmpty) {
+                widget.onSearch(_controller.text);
+              }
+            },
+          ),
         ],
       ),
     );
