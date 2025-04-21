@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_location_explorer/data/provider/place_provider.dart';
+import 'package:flutter_location_explorer/ui/widgets/loading_widget.dart';
+import 'package:flutter_location_explorer/ui/widgets/place_card_widget.dart';
 import 'package:flutter_location_explorer/ui/widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -65,6 +67,54 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  Widget _buildSearchResults() {
+    return Consumer<PlaceProvider>(
+      builder: (context, provider, child) {
+        final loadingState = provider.loadingState;
+
+        if (loadingState == SearchLoadingState.initial) {
+          return const Center(child: Text('검색어를 입력하세요'));
+        }
+
+        if (loadingState == SearchLoadingState.loading &&
+            provider.places.isEmpty) {
+          return const LoadingWidget(message: '검색 중...');
+        }
+
+        if (loadingState == SearchLoadingState.error &&
+            provider.places.isEmpty) {
+          return ErrorDisplayWidget(
+            message: provider.errorMessage,
+            onRetry: () {
+              if (provider.searchQuery.isNotEmpty) {
+                _performSearch(provider.searchQuery);
+              }
+            },
+          );
+        }
+
+        if (provider.places.isEmpty) {
+          return const Center(child: Text('검색 결과가 없습니다'));
+        }
+
+        return ListView.builder(
+          controller: _scrollController,
+          itemCount: provider.places.length + (provider.hasMoreItems ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index < provider.places.length) {
+              return PlaceCardWidget(place: provider.places[index]);
+            } else {
+              // 로딩 상태에 따라 로딩 인디케이터 또는 '더 불러오기' 버튼 표시
+              return loadingState == SearchLoadingState.loading
+                  ? const LoadingMoreWidget()
+                  : _buildLoadMoreButton(provider);
+            }
+          },
+        );
+      },
+    );
+  }
+
   Widget _buildSearchTypeToggle() {
     return Consumer<PlaceProvider>(
       builder: (context, provider, child) {
@@ -125,6 +175,17 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
         child: Text(label),
+      ),
+    );
+  }
+
+  Widget _buildLoadMoreButton(PlaceProvider provider) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      alignment: Alignment.center,
+      child: ElevatedButton(
+        onPressed: () => provider.loadMorePlaces(),
+        child: const Text('더 불러오기'),
       ),
     );
   }
