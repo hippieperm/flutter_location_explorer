@@ -55,11 +55,47 @@ class PlaceProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _currentPosition = await LocationUtil.getCurrentLocation();
+      // 위치 서비스가 활성화되어 있는지 확인
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        _loadingState = SearchLoadingState.error;
+        _errorMessage = '위치 서비스가 비활성화되어 있습니다. 기기의 위치 서비스를 켜주세요.';
+        notifyListeners();
+        return;
+      }
+
+      // 위치 권한 확인
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        // 권한이 거부된 경우 요청
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          // 권한이 거부된 경우 처리
+          _loadingState = SearchLoadingState.error;
+          _errorMessage = '위치 권한이 거부되었습니다. 앱 설정에서 위치 권한을 허용해주세요.';
+          notifyListeners();
+          return;
+        }
+      }
+
+      // 권한이 영구적으로 거부된 경우 처리
+      if (permission == LocationPermission.deniedForever) {
+        _loadingState = SearchLoadingState.error;
+        _errorMessage = '위치 권한이 영구적으로 거부되었습니다. 앱 설정에서 위치 권한을 허용해주세요.';
+        notifyListeners();
+        return;
+      }
+
+      // 위치 정보 가져오기
+      _currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+        timeLimit: const Duration(seconds: 10), // 10초 타임아웃 추가
+      );
+
       _loadingState = SearchLoadingState.loaded;
     } catch (e) {
       _loadingState = SearchLoadingState.error;
-      _errorMessage = '위치를 가져오는 데 실패했습니다.';
+      _errorMessage = '위치를 가져오는 데 실패했습니다: ${e.toString()}';
     }
 
     notifyListeners();
