@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../data/provider/place_provider.dart';
-import '../search/search_page.dart';
 import '../../widgets/loading_overlay.dart';
+import '../search/search_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
