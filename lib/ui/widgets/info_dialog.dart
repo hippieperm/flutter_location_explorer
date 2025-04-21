@@ -10,14 +10,14 @@ class InfoDialog extends StatefulWidget {
   final Widget? customAction;
 
   const InfoDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     this.icon = Icons.info_outline,
     this.iconColor = Colors.blue,
     this.onDismissed,
     this.customAction,
-  }) : super(key: key);
+  });
 
   static Future<void> show(
     BuildContext context, {
@@ -108,7 +108,7 @@ class _InfoDialogState extends State<InfoDialog>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withAlpha(51),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -130,7 +130,7 @@ class _InfoDialogState extends State<InfoDialog>
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: widget.iconColor.withOpacity(0.1),
+                  color: widget.iconColor.withAlpha(26),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(widget.icon, color: widget.iconColor, size: 40),

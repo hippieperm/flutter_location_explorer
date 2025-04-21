@@ -17,7 +17,7 @@ class PlaceProvider extends ChangeNotifier {
   String _searchQuery = '';
   int _totalItems = 0;
   int _currentPage = 1;
-  int _itemsPerPage = 10;
+  final int _itemsPerPage = 10;
   bool _hasMoreItems = true;
   bool _isLocationSearch = false;
 

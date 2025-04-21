@@ -8,13 +8,13 @@ class LoadingOverlay extends StatelessWidget {
   final Color textColor;
 
   const LoadingOverlay({
-    Key? key,
+    super.key,
     required this.isLoading,
     required this.child,
     this.message = '로딩 중...',
     this.overlayColor = Colors.black54,
     this.textColor = Colors.white,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class LoadingOverlay extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
+                        color: Colors.black.withAlpha(51),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
@@ -77,8 +77,7 @@ class LoadingOverlay extends StatelessWidget {
 class AnimatedLoadingDialog extends StatelessWidget {
   final String message;
 
-  const AnimatedLoadingDialog({Key? key, required this.message})
-    : super(key: key);
+  const AnimatedLoadingDialog({super.key, required this.message});
 
   static void show(BuildContext context, String message) {
     showDialog(
@@ -104,7 +103,7 @@ class AnimatedLoadingDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withAlpha(51),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -139,8 +138,7 @@ class SuccessDialog extends StatefulWidget {
   final String message;
   final VoidCallback? onDismissed;
 
-  const SuccessDialog({Key? key, required this.message, this.onDismissed})
-    : super(key: key);
+  const SuccessDialog({super.key, required this.message, this.onDismissed});
 
   static void show(
     BuildContext context,
@@ -210,7 +208,7 @@ class _SuccessDialogState extends State<SuccessDialog>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withAlpha(51),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),
@@ -252,11 +250,11 @@ class ErrorDialog extends StatefulWidget {
   final VoidCallback? onConfirm;
 
   const ErrorDialog({
-    Key? key,
+    super.key,
     required this.message,
     this.title = '오류',
     this.onConfirm,
-  }) : super(key: key);
+  });
 
   static Future<void> show(
     BuildContext context, {
@@ -340,7 +338,7 @@ class _ErrorDialogState extends State<ErrorDialog>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withAlpha(51),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),

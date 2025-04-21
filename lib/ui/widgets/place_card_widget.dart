@@ -56,7 +56,7 @@ class PlaceCardWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withAlpha(77),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
@@ -203,7 +203,7 @@ class PlaceCardWidget extends StatelessWidget {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(0.1),
+                                color: Colors.blue.withAlpha(26),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
