@@ -57,17 +57,22 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          children: [
-            SearchBarWidget(
-              onSearch: (query) {
-                _performSearch(query);
-              },
-            ),
-            _buildSearchTypeToggle(),
-            Expanded(child: _buildSearchResults()),
-          ],
+        padding: const EdgeInsets.all(14.0),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Column(
+            children: [
+              SearchBarWidget(
+                onSearch: (query) {
+                  _performSearch(query);
+                },
+              ),
+              _buildSearchTypeToggle(),
+              Expanded(child: _buildSearchResults()),
+            ],
+          ),
         ),
       ),
     );
