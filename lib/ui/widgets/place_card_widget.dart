@@ -66,6 +66,58 @@ class PlaceCardWidget extends StatelessWidget {
     );
   }
 
+  Widget _buildBody(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (place.description.isNotEmpty) ...[
+            Text(
+              place.description.replaceAll('<b>', '').replaceAll('</b>', ''),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Colors.grey[600], fontSize: 14),
+            ),
+            const SizedBox(height: 12),
+          ],
+
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.location_on, color: Colors.grey[600], size: 16),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  place.roadAddress.isNotEmpty
+                      ? place.roadAddress
+                      : place.address,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.grey[800], fontSize: 14),
+                ),
+              ),
+            ],
+          ),
+
+          if (place.telephone.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(Icons.phone, color: Colors.grey[600], size: 16),
+                const SizedBox(width: 8),
+                Text(
+                  place.telephone,
+                  style: TextStyle(color: Colors.grey[800], fontSize: 14),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
   Widget _buildFullWidthButton(
     BuildContext context,
     String label,
