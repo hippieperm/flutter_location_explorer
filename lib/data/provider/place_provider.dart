@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_location_explorer/data/model/place.dart';
-import 'package:flutter_location_explorer/data/repository/place_repository.dart';
-import 'package:flutter_location_explorer/util/location_util.dart';
+import '../model/place.dart';
+import '../repository/place_repository.dart';
+import '../../util/location_util.dart';
 import 'package:geolocator/geolocator.dart';
 
 enum SearchLoadingState { initial, loading, loaded, error }

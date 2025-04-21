@@ -1,5 +1,5 @@
-import 'package:flutter_location_explorer/data/model/place.dart';
-import 'package:flutter_location_explorer/data/repository/naver_api_client.dart';
+import '../model/place.dart';
+import 'naver_api_client.dart';
 
 class PlaceRepository {
   final NaverApiClient _naverApiClient = NaverApiClient();

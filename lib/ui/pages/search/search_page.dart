@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_location_explorer/data/provider/place_provider.dart';
-import 'package:flutter_location_explorer/ui/widgets/loading_widget.dart';
-import 'package:flutter_location_explorer/ui/widgets/place_card_widget.dart';
-import 'package:flutter_location_explorer/ui/widgets/search_bar_widget.dart';
+import '../../../data/provider/place_provider.dart';
+import '../../widgets/loading_widget.dart';
+import '../../widgets/place_card_widget.dart';
+import '../../widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 class SearchPage extends StatefulWidget {

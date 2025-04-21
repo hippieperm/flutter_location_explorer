@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_location_explorer/util/url_util.dart';
+import '../../util/url_util.dart';
 import '../../data/model/place.dart';
 
 class PlaceCardWidget extends StatelessWidget {

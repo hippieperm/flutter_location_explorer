@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_location_explorer/ui/pages/search/search_page.dart';
+
+import '../search/search_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

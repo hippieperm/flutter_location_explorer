@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_location_explorer/data/provider/place_provider.dart';
+import 'data/provider/place_provider.dart';
 import 'package:provider/provider.dart';
 import 'ui/pages/home/home_page.dart';
 
