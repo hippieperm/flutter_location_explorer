@@ -24,14 +24,14 @@ class UrlUtil {
     return false;
   }
 
-  // 지도 열기
-  static Future<bool> openMap(
-    double latitude,
-    double longitude,
-    String title,
-  ) async {
+  // 지도 열기 - 수정된 버전
+  static Future<bool> openMap(double mapx, double mapy, String title) async {
+    // 네이버 지도는 epsg:5179 좌표를 사용하므로,
+    // 직접 네이버 검색 결과 페이지로 이동하는 방식으로 변경
+    final encodedTitle = Uri.encodeComponent(title);
     final url =
-        'https://map.naver.com/p/directions/-/$title,,/$latitude,$longitude,PLACE_POI/-/transit';
+        'https://m.map.naver.com/search2/search.naver?query=$encodedTitle';
+
     final Uri uri = Uri.parse(url);
 
     if (await canLaunchUrl(uri)) {
