@@ -13,9 +13,9 @@
 ## 📱 스크린샷
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/user-attachments/assets/471d26fc-ed69-4c63-91d1-6c63200bfe1a" width="30%" alt="홈 화면">
-  <img src="https://github.com/user-attachments/assets/4b74a8f9-f49e-4d1f-b123-fb134d915c18" width="30%" alt="검색 화면">
-  <img src="https://github.com/user-attachments/assets/68d763c3-9c11-471f-a225-ea5359abbb51" width="30%" alt="상세 화면">
+  <img src="screenshots/home_screen.png" width="30%" alt="홈 화면">
+  <img src="screenshots/search_screen.png" width="30%" alt="검색 화면">
+  <img src="screenshots/detail_screen.png" width="30%" alt="상세 화면">
 </div>
 
 ## 🛠️ 사용 기술
@@ -29,31 +29,31 @@
 ## 📂 프로젝트 구조
 
 ```
-lib/
-├── data/                      # 데이터 계층
-│   ├── model/                 # 데이터 모델
-│   │   └── place.dart         # 장소 모델 클래스
-│   ├── provider/              # 상태 관리 프로바이더
-│   │   └── place_provider.dart
-│   └── repository/            # 데이터 소스 처리
-│       ├── naver_api_client.dart
-│       └── place_repository.dart
-├── ui/                        # UI 계층
-│   ├── pages/                 # 페이지 화면
-│   │   ├── home/              # 홈 페이지
-│   │   │   ├── widgets/
-│   │   │   └── home_page.dart
-│   │   └── search/            # 검색 페이지
-│   │       └── search_page.dart
-│   └── widgets/               # 재사용 가능한 위젯
-│       ├── loading_overlay.dart
-│       ├── loading_widget.dart
-│       ├── place_card_widget.dart
-│       └── search_bar_widget.dart
-├── util/                      # 유틸리티 함수
-│   ├── location_util.dart
-│   └── url_util.dart
-└── main.dart                  # 앱 진입점
+📦lib
+ ┣ 📂data                   # 데이터 계층
+ ┃ ┣ 📂model                # 데이터 모델
+ ┃ ┃ ┗ 📜place.dart         # 장소 모델 클래스
+ ┃ ┣ 📂provider             # 상태 관리 프로바이더
+ ┃ ┃ ┗ 📜place_provider.dart
+ ┃ ┗ 📂repository           # 데이터 소스 처리
+ ┃ ┃ ┣ 📜naver_api_client.dart
+ ┃ ┃ ┗ 📜place_repository.dart
+ ┣ 📂ui                     # UI 계층
+ ┃ ┣ 📂pages                # 페이지 화면
+ ┃ ┃ ┣ 📂home               # 홈 페이지
+ ┃ ┃ ┃ ┣ 📂widget
+ ┃ ┃ ┃ ┗ 📜home_page.dart
+ ┃ ┃ ┗ 📂search             # 검색 페이지
+ ┃ ┃ ┃ ┗ 📜search_page.dart
+ ┃ ┗ 📂widgets              # 재사용 가능한 위젯
+ ┃ ┃ ┣ 📜loading_overlay.dart
+ ┃ ┃ ┣ 📜loading_widget.dart
+ ┃ ┃ ┣ 📜place_card_widget.dart
+ ┃ ┃ ┗ 📜search_bar_widget.dart
+ ┣ 📂util                   # 유틸리티 함수
+ ┃ ┣ 📜location_util.dart
+ ┃ ┗ 📜url_util.dart
+ ┗ 📜main.dart              # 앱 진입점
 ```
 
 ## 🚀 시작하기
