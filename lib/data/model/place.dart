@@ -10,6 +10,8 @@ class Place {
   final double mapy;
   final String imageUrl;
 
+  String get cleanTitle => title.replaceAll('<b>', '').replaceAll('</b>', '');
+
   Place({
     required this.title,
     required this.link,
