@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import '../../../data/provider/place_provider.dart';
 import '../search/search_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -131,7 +132,48 @@ class HomePage extends StatelessWidget {
       width: double.infinity,
       height: 55,
       child: TextButton.icon(
-        onPressed: () {},
+        onPressed: () async {
+          // 로딩 표시
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('위치 정보를 가져오는 중...'),
+              duration: Duration(seconds: 1),
+            ),
+          );
+
+          final provider = Provider.of<PlaceProvider>(context, listen: false);
+
+          // 위치 권한 요청 및 위치 정보 가져오기
+          await provider.getCurrentLocation();
+
+          if (!context.mounted) return;
+
+          if (provider.currentPosition != null) {
+            // 위치 정보를 성공적으로 가져온 경우
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('위치 정보를 성공적으로 가져왔습니다.'),
+                duration: Duration(seconds: 1),
+              ),
+            );
+
+            // 검색 페이지로 이동하고 위치 기반 검색 모드 설정
+            provider.setSearchMode(true);
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SearchPage()),
+            );
+          } else {
+            // 위치 정보를 가져오지 못한 경우
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('위치 정보를 가져오는데 실패했습니다. 위치 권한을 확인해주세요.'),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
+        },
         icon: const Icon(Icons.location_on),
         label: const Text('내 위치 사용하기'),
         style: TextButton.styleFrom(
