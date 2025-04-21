@@ -131,8 +131,9 @@ class _SearchPageState extends State<SearchPage> {
               Expanded(
                 child: _buildToggleButton(
                   label: '키워드 검색',
-                  selected: provider.currentPosition == null,
+                  selected: !provider.isLocationSearch,
                   onPressed: () {
+                    provider.setSearchMode(false);
                     if (provider.searchQuery.isNotEmpty) {
                       provider.searchPlacesByKeyword(provider.searchQuery);
                     }
@@ -143,8 +144,10 @@ class _SearchPageState extends State<SearchPage> {
               Expanded(
                 child: _buildToggleButton(
                   label: '내 주변 검색',
-                  selected: provider.currentPosition != null,
+                  selected: provider.isLocationSearch,
                   onPressed: () async {
+                    provider.setSearchMode(true);
+
                     if (provider.currentPosition == null) {
                       await provider.getCurrentLocation();
                     }
@@ -199,7 +202,7 @@ class _SearchPageState extends State<SearchPage> {
   void _performSearch(String query) {
     final provider = Provider.of<PlaceProvider>(context, listen: false);
 
-    if (provider.currentPosition != null) {
+    if (provider.isLocationSearch && provider.currentPosition != null) {
       provider.searchPlacesByLocation(query);
     } else {
       provider.searchPlacesByKeyword(query);
