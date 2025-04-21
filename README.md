@@ -13,10 +13,12 @@
 ## 📱 스크린샷
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="screenshots/home_screen.png" width="30%" alt="홈 화면">
-  <img src="screenshots/search_screen.png" width="30%" alt="검색 화면">
-  <img src="screenshots/detail_screen.png" width="30%" alt="상세 화면">
+  <img src="https://github.com/user-attachments/assets/471d26fc-ed69-4c63-91d1-6c63200bfe1a" width="30%" alt="홈 화면">
+  <img src="https://github.com/user-attachments/assets/4b74a8f9-f49e-4d1f-b123-fb134d915c18" width="30%" alt="검색 화면">
+  <img src="https://github.com/user-attachments/assets/68d763c3-9c11-471f-a225-ea5359abbb51" width="30%" alt="상세 화면">
 </div>
+
+
 
 ## 🛠️ 사용 기술
 
