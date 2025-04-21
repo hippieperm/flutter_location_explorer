@@ -42,7 +42,7 @@ class PlaceCardWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              place.title.replaceAll('<b>', '').replaceAll('</b>', ''),
+              place.cleanTitle,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -135,7 +135,7 @@ class PlaceCardWidget extends StatelessWidget {
             context,
             Icons.map,
             '지도보기',
-            () => UrlUtil.openMap(place.mapy, place.mapx, place.title),
+            () => UrlUtil.openMapWithPlace(place),
           ),
           if (place.telephone.isNotEmpty)
             _buildActionButton(
@@ -184,9 +184,7 @@ class PlaceCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        place.title
-                            .replaceAll('<b>', '')
-                            .replaceAll('</b>', ''),
+                        place.cleanTitle,
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
