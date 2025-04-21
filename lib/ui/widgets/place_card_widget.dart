@@ -149,6 +149,156 @@ class PlaceCardWidget extends StatelessWidget {
     );
   }
 
+  void _openPlaceDetail(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder:
+          (context) => DraggableScrollableSheet(
+            initialChildSize: 0.7,
+            maxChildSize: 0.95,
+            minChildSize: 0.5,
+            builder:
+                (_, controller) => Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: ListView(
+                    controller: controller,
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 4,
+                          width: 40,
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        place.title
+                            .replaceAll('<b>', '')
+                            .replaceAll('</b>', ''),
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      if (place.category.isNotEmpty) ...[
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                place.category,
+                                style: TextStyle(
+                                  color: Colors.blue[700],
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      if (place.description.isNotEmpty) ...[
+                        Text(
+                          place.description
+                              .replaceAll('<b>', '')
+                              .replaceAll('</b>', ''),
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      _buildDetailItem(
+                        Icons.location_on,
+                        '도로명주소',
+                        place.roadAddress,
+                      ),
+                      _buildDetailItem(Icons.home, '지번주소', place.address),
+                      if (place.telephone.isNotEmpty)
+                        _buildDetailItem(Icons.phone, '전화번호', place.telephone),
+                      const SizedBox(height: 24),
+                      _buildFullWidthButton(
+                        context,
+                        '웹페이지 방문하기',
+                        Icons.public,
+                        () => UrlUtil.openUrl(place.link),
+                      ),
+                      const SizedBox(height: 12),
+                      _buildFullWidthButton(
+                        context,
+                        '지도에서 보기',
+                        Icons.map,
+                        () => UrlUtil.openMap(
+                          place.mapy,
+                          place.mapx,
+                          place.title,
+                        ),
+                      ),
+                      if (place.telephone.isNotEmpty) ...[
+                        const SizedBox(height: 12),
+                        _buildFullWidthButton(
+                          context,
+                          '전화 걸기',
+                          Icons.call,
+                          () => UrlUtil.callPhone(place.telephone),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+          ),
+    );
+  }
+
+  Widget _buildDetailItem(IconData icon, String label, String value) {
+    if (value.isEmpty) return const SizedBox();
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: Colors.blue, size: 20),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(color: Colors.grey[500], fontSize: 14),
+                ),
+                const SizedBox(height: 2),
+                Text(value, style: const TextStyle(fontSize: 16)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildActionButton(
     BuildContext context,
     IconData icon,
