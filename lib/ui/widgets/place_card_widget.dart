@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_location_explorer/util/url_util.dart';
 import '../../data/model/place.dart';
 
 class PlaceCardWidget extends StatelessWidget {
@@ -114,6 +115,62 @@ class PlaceCardWidget extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+
+  Widget _buildFooter(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildActionButton(
+            context,
+            Icons.public,
+            '상세정보',
+            () => UrlUtil.openUrl(place.link),
+          ),
+          _buildActionButton(
+            context,
+            Icons.map,
+            '지도보기',
+            () => UrlUtil.openMap(place.mapy, place.mapx, place.title),
+          ),
+          if (place.telephone.isNotEmpty)
+            _buildActionButton(
+              context,
+              Icons.call,
+              '전화걸기',
+              () => UrlUtil.callPhone(place.telephone),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton(
+    BuildContext context,
+    IconData icon,
+    String label,
+    VoidCallback onPressed,
+  ) {
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: Colors.blue),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(color: Colors.blue[800], fontSize: 12),
+            ),
+          ],
+        ),
       ),
     );
   }
