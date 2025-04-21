@@ -50,10 +50,10 @@
  ┃ ┃ ┣ 📜loading_widget.dart
  ┃ ┃ ┣ 📜place_card_widget.dart
  ┃ ┃ ┗ 📜search_bar_widget.dart
- ┣ 📂util                   # 유틸리티 함수
+ ┣ 📂util                       # 유틸리티 함수
  ┃ ┣ 📜location_util.dart
  ┃ ┗ 📜url_util.dart
- ┗ 📜main.dart              # 앱 진입점
+ ┗ 📜main.dart                  # 앱 진입점
 ```
 
 ## 🚀 시작하기
