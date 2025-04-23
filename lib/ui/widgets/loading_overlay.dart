@@ -148,9 +148,8 @@ class SuccessDialog extends StatefulWidget {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder:
-          (context) =>
-              SuccessDialog(message: message, onDismissed: onDismissed),
+      builder: (context) =>
+          SuccessDialog(message: message, onDismissed: onDismissed),
     );
   }
 
@@ -180,12 +179,15 @@ class _SuccessDialogState extends State<SuccessDialog>
     _controller.forward();
 
     // 2초 후 자동으로 닫힘
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        Navigator.of(context).pop();
-        widget.onDismissed?.call();
-      }
-    });
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        if (mounted) {
+          Navigator.of(context).pop();
+          widget.onDismissed?.call();
+        }
+      },
+    );
   }
 
   @override
@@ -265,9 +267,8 @@ class ErrorDialog extends StatefulWidget {
     return showDialog(
       context: context,
       barrierDismissible: false,
-      builder:
-          (context) =>
-              ErrorDialog(title: title, message: message, onConfirm: onConfirm),
+      builder: (context) =>
+          ErrorDialog(title: title, message: message, onConfirm: onConfirm),
     );
   }
 

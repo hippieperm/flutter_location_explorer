@@ -154,15 +154,13 @@ class HomePage extends StatelessWidget {
               context,
               '위치 정보를 성공적으로 가져왔습니다!',
               onDismissed: () {
-                // 다이얼로그가 닫힌 후 검색 페이지로 이동
+                // 다이얼로그가 닫힌 후 검색어 선택 다이얼로그 표시
                 if (context.mounted) {
                   // 위치 기반 검색 모드 설정
                   provider.setSearchMode(true);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SearchPage()),
-                  );
+                  // 검색어 선택 다이얼로그 표시
+                  _showSearchQueryDialog(context, provider);
                 }
               },
             );
@@ -181,6 +179,71 @@ class HomePage extends StatelessWidget {
           foregroundColor: Colors.white,
           textStyle: const TextStyle(fontSize: 16),
         ),
+      ),
+    );
+  }
+
+  // 검색어 선택 다이얼로그 (정적 메서드로 변경)
+  static void _showSearchQueryDialog(
+      BuildContext context, PlaceProvider provider) {
+    final List<String> categoryOptions = [
+      '카페',
+      '식당',
+      '병원',
+      '약국',
+      '마트',
+      '편의점',
+      '주유소',
+      '주차장',
+      '은행',
+      '학교',
+    ];
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('검색할 장소 유형을 선택하세요'),
+        content: Container(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: categoryOptions.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(categoryOptions[index]),
+                onTap: () {
+                  final selectedQuery = categoryOptions[index];
+                  // 다이얼로그 닫기
+                  Navigator.of(context).pop();
+
+                  // 선택한 검색어로 위치 기반 검색 실행
+                  provider.searchPlacesByLocation(selectedQuery);
+
+                  // 검색 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SearchPage()),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // 다이얼로그 닫기
+              Navigator.of(context).pop();
+
+              // 검색 페이지로 이동
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchPage()),
+              );
+            },
+            child: Text('취소'),
+          ),
+        ],
       ),
     );
   }
